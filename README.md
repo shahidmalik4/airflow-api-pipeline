@@ -112,7 +112,3 @@ This project was built as a learning system to understand:
 - API ingestion workflows
 
 ---
-
-## ⭐ Status
-
-Learning sandbox → evolving into portfolio-grade data engineering project
