@@ -30,7 +30,7 @@ This project demonstrates core Data Engineering orchestration concepts using Air
 ## 📊 Architecture
 
 <p align="center">
-  <img src="assets/architecture.png" width="850"/>
+  <img src="assets/airflow_architecture.png" width="850"/>
 </p>
 
 ---
