@@ -1,0 +1,81 @@
+x-airflow-common: &airflow-common
+  build: .
+  env_file:
+    - .env
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_DB_USER}:${AIRFLOW_DB_PASSWORD}@airflow-db/${AIRFLOW_DB_NAME}
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_SECRET_KEY}
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - airflow_logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+    - ./sql:/opt/airflow/sql
+    - ./data:/opt/airflow/data
+  depends_on:
+    - airflow-db
+
+services:
+
+  airflow-db:
+    image: postgres:16
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${AIRFLOW_DB_USER}
+      POSTGRES_PASSWORD: ${AIRFLOW_DB_PASSWORD}
+      POSTGRES_DB: ${AIRFLOW_DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - airflow_db_data:/var/lib/postgresql/data
+
+  postgres:
+    image: postgres:16
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5434:5432"
+    volumes:
+      - project_db_data:/var/lib/postgresql/data
+
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "8080:8080"
+    depends_on:
+      - airflow-scheduler
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+
+  airflow-init:
+    <<: *airflow-common
+    command: >
+      bash -c "
+      airflow db migrate &&
+      airflow users create
+      --username ${AIRFLOW_ADMIN_USERNAME}
+      --password ${AIRFLOW_ADMIN_PASSWORD}
+      --firstname admin
+      --lastname user
+      --role Admin
+      --email ${AIRFLOW_ADMIN_EMAIL}
+      "
+    depends_on:
+      - airflow-db
+
+volumes:
+  airflow_db_data:
+  project_db_data:
+  airflow_logs:
+  airflow_plugins:

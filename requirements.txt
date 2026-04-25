@@ -1,0 +1,6 @@
+apache-airflow-providers-postgres
+apache-airflow-providers-http
+psycopg2-binary
+faker
+pandas
+requests

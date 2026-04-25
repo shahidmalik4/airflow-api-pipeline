@@ -1,0 +1,26 @@
+pipelines:
+  - dag_id: dynamic_posts_pipeline
+    endpoint: posts
+    table: dynamic_raw_posts
+
+  - dag_id: dynamic_comments_pipeline
+    endpoint: comments
+    table: dynamic_raw_comments
+
+  - dag_id: dynamic_users_pipeline
+    endpoint: users
+    table: dynamic_raw_users
+
+
+custom_pipelines:
+  - dag_id: custom_posts_pipeline
+    endpoint: posts
+    table: custom_raw_posts
+
+  - dag_id: custom_comments_pipeline
+    endpoint: comments
+    table: custom_raw_comments
+
+  - dag_id: custom_users_pipeline
+    endpoint: users
+    table: custom_raw_users

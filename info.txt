@@ -1,0 +1,15 @@
+1. Postgres Connection
+
+Conn Id: postgres_default
+Conn Type: Postgres
+Host: postgres ← (service name from docker)
+Schema: de_db
+Login: de_user
+Password: de_pass
+Port: 5432
+
+2. HTTP Connection (for API)
+
+Conn Id: json_api
+Conn Type: HTTP
+Host: https://jsonplaceholder.typicode.com
