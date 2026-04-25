@@ -18,7 +18,7 @@ All pipelines ingest data from public APIs and load it into Postgres.
 
 ## 🏗️ Architecture
 
-![Architecture](assets/architecture.png)
+![Architecture](assets/airflow_architecture.png)
 
 ---
 
@@ -110,12 +110,6 @@ This project was built as a learning system to understand:
 - Data pipeline design
 - Production-style DAG structuring
 - API ingestion workflows
-
----
-
-## 📷 Architecture
-
-See `/assets/architecture.png`
 
 ---
 
