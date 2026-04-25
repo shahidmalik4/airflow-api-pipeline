@@ -27,15 +27,11 @@ This project demonstrates core Data Engineering orchestration concepts using Air
 
 ---
 
-## 🧱 Architecture
+## 📊 Architecture
 
-API (JSONPlaceholder)
-        ↓
-Airflow DAGs
-        ↓
-Custom Operator (API → Transform → Load)
-        ↓
-PostgreSQL (raw tables)
+<p align="center">
+  <img src="assets/architecture.png" width="850"/>
+</p>
 
 ---
 
