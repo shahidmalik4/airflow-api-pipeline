@@ -1,80 +1,124 @@
-# Airflow DE Sandbox (API → Postgres Orchestration)
+# Airflow Orchestration Lab
 
-A modular Apache Airflow project simulating real-world Data Engineering pipelines using APIs, dynamic DAG generation, and custom operators.
+A modular Apache Airflow project demonstrating multiple workflow patterns for building scalable data pipelines.
 
----
+## 🚀 Overview
 
-## ⚙️ Tech Stack
+This project simulates a real-world data orchestration system using multiple Airflow paradigms:
 
-- Apache Airflow
-- Docker & Docker Compose
-- PostgreSQL
-- Python (requests, psycopg2)
-- JSONPlaceholder API
+- TaskFlow API DAGs (modern style)
+- Dynamic DAG generation
+- Custom Operators
+- Trigger-based orchestration
+- PostgreSQL RAW data layer
 
----
-
-## 📌 Project Overview
-
-This project demonstrates core Data Engineering orchestration concepts using Airflow:
-
-- TaskFlow API DAGs
-- Dynamic DAG generation from YAML config
-- Custom Airflow operators
-- API ingestion pipelines
-- Postgres loading with idempotency
-- Trigger-based DAG orchestration
+All pipelines ingest data from public APIs and load it into Postgres.
 
 ---
 
-## 📊 Architecture
+## 🏗️ Architecture
 
-<p align="center">
-  <img src="assets/airflow_architecture.png" width="850"/>
-</p>
+![Architecture](assets/architecture.png)
 
 ---
 
-## 📂 DAG Types
+## ⚙️ Pipeline Types
 
-### 1. TaskFlow API DAG
-- Simple ETL pipeline using Airflow TaskFlow API
+### 1. TaskFlow API Pipeline
+- `todos_taskflow_pipeline`
+- Extracts and loads todos into Postgres RAW layer
 
-### 2. Dynamic Pipelines
-- DAGs generated from YAML configuration
+### 2. Dynamic DAGs
+- Automatically generate DAGs from configuration
+- Used for:
+  - posts
+  - users
+  - comments
 
-### 3. Custom Operator DAGs
-- Reusable operator for API ingestion into Postgres
+### 3. Custom Operator Pipeline
+- Reusable `ApiToPostgresOperator`
+- Handles:
+  - API extraction
+  - table creation
+  - idempotent inserts
 
 ### 4. Orchestration DAGs
-- DAG chaining using TriggerDagRunOperator
+- Trigger downstream DAGs after completion
 
 ---
 
-## 🔁 Features Implemented
+## 🧱 Tech Stack
 
-- Dynamic DAG creation
-- Custom API-to-Postgres operator
-- Idempotent inserts (ON CONFLICT DO NOTHING)
-- Retry handling (API level)
-- Structured logging (JSON logs)
-- DAG dependencies and triggers
+- Apache Airflow
+- Python
+- Postgres
+- Docker
+- REST APIs (JSONPlaceholder)
 
 ---
 
-## How to Run
+## 📦 Data Sources
+
+- https://jsonplaceholder.typicode.com/posts
+- https://jsonplaceholder.typicode.com/users
+- https://jsonplaceholder.typicode.com/comments
+- https://jsonplaceholder.typicode.com/todos
+
+---
+
+## 🧠 Key Concepts Implemented
+
+- DAG creation & scheduling
+- TaskFlow API
+- Dynamic DAG generation
+- Custom Operators
+- XCom usage (implicit via TaskFlow)
+- Sensors (basic)
+- TriggerDagRunOperator
+- Idempotent loading (ON CONFLICT)
+- RAW layer data modeling
+
+---
+
+## ▶️ Run Locally
 
 ```bash
 docker-compose up -d
 ```
 
-### Airflow UI
+Access Airflow UI:
 ```
 http://localhost:8080
 ```
 
-### Login
-```
-username: admin
-password: admin
-```
+---
+
+## 📊 Output Tables
+
+- raw_posts
+- raw_users
+- raw_comments
+- raw_todos
+
+---
+
+## 📌 Purpose
+
+This project was built as a learning system to understand:
+
+- Airflow orchestration patterns
+- Data pipeline design
+- Production-style DAG structuring
+- API ingestion workflows
+
+---
+
+## 📷 Architecture
+
+See `/assets/architecture.png`
+
+---
+
+## ⭐ Status
+
+Learning sandbox → evolving into portfolio-grade data engineering project
